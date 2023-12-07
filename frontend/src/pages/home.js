@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios';
+import './css/fondo.css';
+import Navbar from './Navbar';
 import { useEffect, useState } from 'react';
 
 function Home() {
@@ -12,6 +14,7 @@ function Home() {
   }, []);
     return (
     <div>
+      <Navbar/>
         {contacts.map((value,key)=>{
             return <div>{value.firstname}</div>
             })}

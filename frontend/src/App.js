@@ -1,8 +1,9 @@
 
 import './App.css';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import Home from './pages/Home';
+import Home from './pages/home';
 import Plant from './pages/RegisterPlant';
+
 function App() {
   
   return (
