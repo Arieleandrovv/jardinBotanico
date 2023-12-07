@@ -12,15 +12,32 @@ const getPlants = async (req, res) => {
 };
 
 const createNewPlant = async (req, res) => {
-    const newPlant = new Plant(req.body.name, req.body.scientificName, req.body.type, req.body.indiginousName , req.body.description);
-    await db.collection('plants').add({
+    const newPlant = new Plant(
+        req.body.name,
+        req.body.scientificName,
+        req.body.type,
+        req.body.description,
+        req.body.plantNames 
+    );
+    console.log(req.body.plantNames);
+    const plantsCollection = db.collection('plants');
+
+    const plantDocRef = await plantsCollection.add({
         name: newPlant.name,
         scientificName: newPlant.scientificName,
         type: newPlant.type,
-        indiginousName: newPlant.indiginousName,
-        description: newPlant.description
-    })    
-    res.send('new Plant created');
+        description: newPlant.description,
+        plantNames: newPlant.plantNames
+    });
+    /*const plantNameCollection = plantDocRef.collection('plantNames');
+
+    //newPlant.plantNames.forEach(async (plantName) => {
+        await plantNameCollection.add({
+            plantNames: newPlant.plantNames
+        });
+    //});*/
+
+    res.send('New Plant created');
 };
 
 const updatePlant = async (req, res) => {

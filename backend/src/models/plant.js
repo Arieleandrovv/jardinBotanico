@@ -1,10 +1,13 @@
-class Plant{
-    constructor(name,scientificName, type, description, indiginousName) {
+class Plant {
+    constructor(name, scientificName, type, description, plantNames) {
         this.name = name;
         this.scientificName = scientificName;
         this.type = type;
-        this.indiginousName = indiginousName;
-        this.description = description;        
+        this.description = description;
+        this.plantNames = plantNames || [];
+    }
+    addIndiginousName(plantName) {
+        this.plantNames.push(plantName);
     }
 }
 module.exports = Plant;

@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from './pages/Home';
 import Plant from './pages/RegisterPlant';
+import 'bootstrap/dist/css/bootstrap.css';
 function App() {
   
   return (
