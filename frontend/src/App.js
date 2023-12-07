@@ -2,7 +2,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/home';
-import Contactos from './pages/Contactos';
+import Plant from './pages/RegisterPlant';
 function App() {
   
   return (
@@ -12,7 +12,7 @@ function App() {
        <Link to="/contact"> nuevo contacto</Link>
         <Routes>
           <Route path='/' element={ <Home/>} />
-          <Route path='/contact' element={ <Contactos/>} />
+          <Route path='/RegistroPlanta' element={ <Plant/>} />
         </Routes>
        </BrowserRouter>
       
