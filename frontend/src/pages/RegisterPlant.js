@@ -22,11 +22,7 @@ function Contactos() {
             description
         };
         await axios.post(`${endpoint}/new-plant` , data);
-        setName("");
-        setScientificName("");
-        setType("");
-        setIndiginousName("");
-        setDescription("");
+
     };
 
     return (
