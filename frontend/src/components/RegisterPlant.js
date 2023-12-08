@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { URL_BACKEND } from '../const';
-import Sidebar from "./navigation components/Side";
+import Sidebar from "./NavigationComponentsAdmin/Side";
+import Navbar from "./NavigationComponentsAdmin/Navbar";
 
 const endpoint = URL_BACKEND;
 
@@ -41,6 +42,8 @@ function Plantas() {
     };
 
     return (
+        <div>
+            <Navbar />
         <div className="container-fluid">
             <div className="row">
                 <Sidebar />
@@ -80,6 +83,7 @@ function Plantas() {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 }
