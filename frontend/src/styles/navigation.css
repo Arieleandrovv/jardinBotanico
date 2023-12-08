@@ -1,0 +1,57 @@
+.footer {
+  background-color: rgb(33, 37, 41);
+  color: rgb(117, 118, 110);
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: small;
+}
+
+body {
+  margin-bottom: 80px;
+}
+.correo{
+  color:green;
+}
+.container{
+  -ms-flex-item-align: auto;
+}
+.navbar {
+  background-color: black;
+  padding: 30px 0;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 35px;
+}
+
+.nav-links {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links:hover {
+  border-bottom: 2px solid white;
+}
+.JAR {
+  max-height: 120px; 
+  max-width: 120px;
+  object-fit: contain; 
+}
+  
