@@ -1,18 +1,17 @@
 
 import './App.css';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import ShowListPlants from './pages/ShowListPlants';
-import Plant from './pages/RegisterPlant';
+import ShowListPlants from './components/ShowListPlants';
+import Plant from './components/RegisterPlant';
 import 'bootstrap/dist/css/bootstrap.css';
 function App() {
   
   return (
-    <div className="App">
-      
+    <div className="App">      
        <BrowserRouter>
-        <Routes>
-          <Route path='/' element={ <ShowListPlants/>} />
-          <Route path='/RegistroPlanta' element={ <Plant/>} />
+        <Routes>        
+          <Route path='/plantas' element={ <ShowListPlants/>} />
+          <Route path='/registroPlanta' element={ <Plant/>} />
         </Routes>
        </BrowserRouter>
       
