@@ -1,7 +1,7 @@
 
 import './App.css';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import Home from './pages/Home';
+import ShowListPlants from './pages/ShowListPlants';
 import Plant from './pages/RegisterPlant';
 import 'bootstrap/dist/css/bootstrap.css';
 function App() {
@@ -11,7 +11,7 @@ function App() {
       
        <BrowserRouter>
         <Routes>
-          <Route path='/' element={ <Home/>} />
+          <Route path='/' element={ <ShowListPlants/>} />
           <Route path='/RegistroPlanta' element={ <Plant/>} />
         </Routes>
        </BrowserRouter>

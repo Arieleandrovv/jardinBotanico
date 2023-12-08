@@ -5,7 +5,7 @@ const getPlants = async (req, res) => {
     const plants = [];
     const querySnapshot = await db.collection('plants').get();
     querySnapshot.forEach(doc => {
-        const plant = new Plant(doc.data().name, doc.data().scientificName, doc.data().type, doc.data().indiginousName ,doc.data().description);
+        const plant = new Plant(doc.data().name, doc.data().scientificName, doc.data().type, doc.data().plantNames ,doc.data().description);
         plants.push(plant);
     });
     res.json(querySnapshot.docs.map(doc => doc.data()));
@@ -29,14 +29,6 @@ const createNewPlant = async (req, res) => {
         description: newPlant.description,
         plantNames: newPlant.plantNames
     });
-    /*const plantNameCollection = plantDocRef.collection('plantNames');
-
-    //newPlant.plantNames.forEach(async (plantName) => {
-        await plantNameCollection.add({
-            plantNames: newPlant.plantNames
-        });
-    //});*/
-
     res.send('New Plant created');
 };
 
@@ -47,10 +39,24 @@ const updatePlant = async (req, res) => {
 const deletePlant = async (req, res) => {
     res.json();
 };
+const getPlant = async (req, res) => {
+    const plant = [];
+    const querySnapshot = await db.collection('plants').doc(req.params.id).get();
+    const plantDoc = new Plant(
+        querySnapshot.data().name,
+        querySnapshot.data().scientificName,
+        querySnapshot.data().type,
+        querySnapshot.data().description,
+        querySnapshot.data().plantNames
+    );
+    plant.push(plantDoc);
+    res.json(plant);
+};
 
 module.exports = {
     getPlants,
     createNewPlant,
     updatePlant,
-    deletePlant
+    deletePlant,
+    getPlant
 };

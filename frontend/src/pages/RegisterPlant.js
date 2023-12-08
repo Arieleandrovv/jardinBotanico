@@ -21,6 +21,12 @@ function Plantas() {
         setCurrentPlantNames(updatedPlantNames);
     };
 
+    const handleRemovePlantName = (index) => {
+        const updatedPlantNames = [...currentPlantNames];
+        updatedPlantNames.splice(index, 1);
+        setCurrentPlantNames(updatedPlantNames);
+    };
+
     const store = async (e) => {
         e.preventDefault();
         const data = {
@@ -54,6 +60,7 @@ function Plantas() {
                         <div key={index}>
                             <label>{`Otro Nombre ${index + 1}:`}</label>
                             <input type="text" value={plant} onChange={(e) => handlePlantNameChange(index, e.target.value)} />
+                            <button type="button" onClick={() => handleRemovePlantName(index)}>Eliminar</button>
                         </div>
                     ))}
                     <div>
@@ -72,3 +79,4 @@ function Plantas() {
 }
 
 export default Plantas;
+
