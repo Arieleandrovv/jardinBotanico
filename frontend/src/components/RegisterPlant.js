@@ -69,26 +69,6 @@ function Plantas() {
         };
         await axios.post(`${endpoint}/new-plant`, data);
     };
-    const uploadImage = async (e) => {
-        e.preventDefault();
-        const data = new FormData();
-        const image = e.target.files[0];
-        data.append('image', image);
-        console.log(data);
-
-        try {
-            await axios.post(`${endpoint}/upload`, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-        } catch (error) {
-            // Handle error
-            console.error('Error uploading image:', error);
-        }
-    };
-
-
     return (
         <div>
             <Navbar />
