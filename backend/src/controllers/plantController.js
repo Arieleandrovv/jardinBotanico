@@ -5,10 +5,10 @@ const getPlants = async (req, res) => {
     const plants = [];
     const querySnapshot = await db.collection('plants').get();
     querySnapshot.forEach(doc => {
-        const plant = new Plant(doc.data().name, doc.data().scientificName, doc.data().type, doc.data().plantNames ,doc.data().description);
+        const plant = new Plant(doc.data().name, doc.data().scientificName, doc.data().type, doc.data().plantNames ,doc.data().description, doc.data().imageName);
         plants.push(plant);
     });
-    res.json(querySnapshot.docs.map(doc => doc.data()));
+    res.send(querySnapshot.docs.map(doc => doc.data()));
 };
 
 const createNewPlant = async (req, res) => {
@@ -17,7 +17,8 @@ const createNewPlant = async (req, res) => {
         req.body.scientificName,
         req.body.type,
         req.body.description,
-        req.body.plantNames 
+        req.body.plantNames,
+        req.body.imageName 
     );
     console.log(req.body.plantNames);
     const plantsCollection = db.collection('plants');
@@ -27,7 +28,8 @@ const createNewPlant = async (req, res) => {
         scientificName: newPlant.scientificName,
         type: newPlant.type,
         description: newPlant.description,
-        plantNames: newPlant.plantNames
+        plantNames: newPlant.plantNames,
+        imageName: newPlant.imageName
     });
     res.send('New Plant created');
 };

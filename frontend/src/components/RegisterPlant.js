@@ -12,20 +12,23 @@ function Plantas() {
     const [type, setType] = useState("");
     const [currentPlantNames, setCurrentPlantNames] = useState([]);
     const [description, setDescription] = useState("");
-    const [images, setImages] = useState([]);
+    const [image, setImage] = useState("");
+    const [currentImageName, setCurrentImageName] = useState("");
     const [imageUrl, setImageUrl] = useState("");
 
     useEffect(() => {
-        const imageName = 'download.png'; 
-        const apiUrl = `${endpoint}/image/${imageName}`;
+        if (!currentImageName) {
+            return;
+        }
+        const apiUrl = `${endpoint}/image/${currentImageName}`;
         fetch(apiUrl)
-          .then(response => response.text())
-          .then(url => setImageUrl(url))          
-          .catch(error => console.error('Error al obtener la URL de la imagen:', error));
+            .then(response => response.text())
+            .then(url => setImageUrl(url))
+            .catch(error => console.error('Error al obtener la URL de la imagen:', error));
 
-      }, []);
-    
-     
+    }, [currentImageName]);
+
+
 
     const handleAddPlantName = () => {
         setCurrentPlantNames([...currentPlantNames, ""]);
@@ -42,27 +45,32 @@ function Plantas() {
         updatedPlantNames.splice(index, 1);
         setCurrentPlantNames(updatedPlantNames);
     };
-    const handleRemoveImage = (index) => {
-        const updatedImages = [...images];
-        updatedImages.splice(index, 1);
-        setImages(updatedImages);
-    };
 
     const store = async (e) => {
         e.preventDefault();
+        const dataImage = new FormData();
+        const plantImage = image.target.files[0];
+        dataImage.append('image', plantImage);
+
+        const responseName = await axios.post(`${endpoint}/upload`, dataImage, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        setCurrentImageName(responseName.data);
         const data = {
             name,
             scientificName,
             type,
             plantNames: [...currentPlantNames],
-            description
+            description,
+            imageName: responseName.data
+
         };
         await axios.post(`${endpoint}/new-plant`, data);
     };
     const uploadImage = async (e) => {
         e.preventDefault();
-        const newImages = Array.from(e.target.files);
-        setImages([...images, ...newImages]);
         const data = new FormData();
         const image = e.target.files[0];
         data.append('image', image);
@@ -103,6 +111,10 @@ function Plantas() {
                                 <label>Tipo</label>
                                 <input type="text" name="type" value={type} onChange={(e) => setType(e.target.value)} />
                             </div>
+                            <div>
+                                <label>Otros Nombres</label>
+                                <button type="button" onClick={handleAddPlantName}>Agregar Nombre</button>
+                            </div>
                             {currentPlantNames.map((plant, index) => (
                                 <div key={index}>
                                     <label>{`Otro Nombre ${index + 1}:`}</label>
@@ -110,15 +122,12 @@ function Plantas() {
                                     <button type="button" onClick={() => handleRemovePlantName(index)}>Eliminar</button>
                                 </div>
                             ))}
-                            <div>
-                                <label>Otros Nombres</label>
-                                <button type="button" onClick={handleAddPlantName}>Agregar Nombre</button>
-                            </div>
+
                             <div>
                                 <label>Descripcion</label>
                                 <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
                             </div>
-                            <button onClick={store} className="btn btn-primary mt-3">Guardar</button>
+
                             <div>
                                 <label>Subir Imagen</label>
                                 <input
@@ -127,28 +136,16 @@ function Plantas() {
                                     id="imageInput"
                                     accept="image/*"
                                     multiple
-                                    onChange={(e) => uploadImage(e)}
+                                    onChange={(e) => setImage(e)}
                                 />
                             </div>
+                            <div>
+                                <button onClick={store} className="btn btn-primary mt-3">Guardar</button>
+                            </div>
 
-                            {images.length > 0 && (
-                                <div>
-                                    <h4>Imágenes Seleccionadas:</h4>
-                                    <ul>
-                                        {images.map((image, index) => (
-                                            <li key={index}>
-                                                {image.name}
-                                                <button type="button" onClick={() => handleRemoveImage(index)}>
-                                                    Eliminar
-                                                </button>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-                             <div>
-      {imageUrl && <img src={imageUrl} alt="Imagen" />}
-    </div>
+                            <div>
+                                {imageUrl && <img src={imageUrl} alt="Imagen" />}
+                            </div>
 
                         </div>
                     </div>
