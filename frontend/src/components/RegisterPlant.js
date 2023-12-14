@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { URL_BACKEND } from '../const';
 import Sidebar from "./NavigationComponentsAdmin/Side";
@@ -12,6 +12,20 @@ function Plantas() {
     const [type, setType] = useState("");
     const [currentPlantNames, setCurrentPlantNames] = useState([]);
     const [description, setDescription] = useState("");
+    const [images, setImages] = useState([]);
+    const [imageUrl, setImageUrl] = useState("");
+
+    useEffect(() => {
+        const imageName = 'download.png'; 
+        const apiUrl = `${endpoint}/image/${imageName}`;
+        fetch(apiUrl)
+          .then(response => response.text())
+          .then(url => setImageUrl(url))          
+          .catch(error => console.error('Error al obtener la URL de la imagen:', error));
+
+      }, []);
+    
+     
 
     const handleAddPlantName = () => {
         setCurrentPlantNames([...currentPlantNames, ""]);
@@ -28,6 +42,11 @@ function Plantas() {
         updatedPlantNames.splice(index, 1);
         setCurrentPlantNames(updatedPlantNames);
     };
+    const handleRemoveImage = (index) => {
+        const updatedImages = [...images];
+        updatedImages.splice(index, 1);
+        setImages(updatedImages);
+    };
 
     const store = async (e) => {
         e.preventDefault();
@@ -42,6 +61,8 @@ function Plantas() {
     };
     const uploadImage = async (e) => {
         e.preventDefault();
+        const newImages = Array.from(e.target.files);
+        setImages([...images, ...newImages]);
         const data = new FormData();
         const image = e.target.files[0];
         data.append('image', image);
@@ -100,8 +121,34 @@ function Plantas() {
                             <button onClick={store} className="btn btn-primary mt-3">Guardar</button>
                             <div>
                                 <label>Subir Imagen</label>
-                                <input type="file" name="image" id="imageInput" accept="image/*" required onChange={(e) => uploadImage(e)} />
+                                <input
+                                    type="file"
+                                    name="image"
+                                    id="imageInput"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={(e) => uploadImage(e)}
+                                />
                             </div>
+
+                            {images.length > 0 && (
+                                <div>
+                                    <h4>Imágenes Seleccionadas:</h4>
+                                    <ul>
+                                        {images.map((image, index) => (
+                                            <li key={index}>
+                                                {image.name}
+                                                <button type="button" onClick={() => handleRemoveImage(index)}>
+                                                    Eliminar
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                             <div>
+      {imageUrl && <img src={imageUrl} alt="Imagen" />}
+    </div>
 
                         </div>
                     </div>

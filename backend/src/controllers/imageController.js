@@ -31,6 +31,22 @@ const uploadImage = async (req, res) => {
     });
 }
 
+    const showImage = async (req, res) => {
+        const options = {
+            version: 'v2',
+            action: 'read',
+            expires: Date.now() + 1000 * 60 * 60
+        };
+        const filePath = `images/${req.params.name}`;
+        const [url] = await bucket.file(filePath).getSignedUrl(options);
+
+        res.send(url);
+    };
+    
+
+
+
 module.exports = {
-    uploadImage
+    uploadImage,
+    showImage
 }
