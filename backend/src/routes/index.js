@@ -1,8 +1,8 @@
 const {Router} = require('express');
-const {db}=require('../firebase');
 const plantController=require('../controllers/plantController');
 const userController=require('../controllers/userController');
 const authController=require('../controllers/authController');
+const imageController=require('../controllers/imageController');
 
 const router = Router();
 
@@ -20,5 +20,5 @@ router.delete('/delete-user/:id',userController.deleteUser);
 router.post('/login',authController.login);
 router.post('/logout',authController.logout);
 
-
+router.post('/upload',imageController.uploadImage);
 module.exports=router;
