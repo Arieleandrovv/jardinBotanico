@@ -15,7 +15,7 @@ function Plantas() {
     const [currentImageName, setCurrentImageName] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
     const [images, setImages] = useState([]);
-
+/*
    useEffect(() => {
         if (!currentImageName) {
             return;
@@ -26,7 +26,7 @@ function Plantas() {
             .then(url => setImageUrl(url))
             .catch(error => console.error('Error al obtener la URL de la imagen:', error));
 
-    }, [currentImageName]);
+    }, [currentImageName]);*/
 
     ////////////////////////////////////////
 
@@ -84,8 +84,7 @@ function Plantas() {
             const formData = new FormData();
             formData.append(`image-${index}`, imageData.file);
             formData.append(`name-${index}`, imageData.name);
-            formData.append(`description-${index}`, imageData.description);
-            console.log(formData);
+            formData.append(`description-${index}`, imageData.description);            
             try {
                 const responseName = await axios.post(`${endpoint}/upload`, formData, {
                     headers: {

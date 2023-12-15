@@ -22,5 +22,6 @@ router.post('/logout',authController.logout);
 
 router.post('/upload',imageController.uploadImage);
 router.get('/image/:name',imageController.showImage);
+router.delete('/image/:name',imageController.deleteImage); 
 
 module.exports=router;

@@ -4,16 +4,33 @@ import { URL_BACKEND } from '../const';
 import Sidebar from "./NavigationComponentsAdmin/Side";
 import Navbar from "./NavigationComponentsAdmin/Navbar";
 
+
 const endpoint = URL_BACKEND;
 
 function ShowListPlants() {
     const [plants, setPlants] = useState([]);
 
     useEffect(() => {
-        axios.get(`${endpoint}/plants`).then((response) => {
-            setPlants(response.data);
-        });
+        fetchData();
     }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`${endpoint}/plants`);
+            setPlants(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const deletePlant = async (id) => {        
+        const plantDeleted =await axios.delete(`${endpoint}/delete-plant/${id}`);
+        for (const image of plantDeleted.data.imageNames){
+            await axios.delete(`${endpoint}/image/${image.nameFile}`);
+        }
+        fetchData();
+
+    }
 
     return (
         <div>
@@ -35,19 +52,19 @@ function ShowListPlants() {
                             </tr>
                         </thead>
                         <tbody>
-                            {plants.map((plant, key) => (
-                                <tr key={key}>
-                                    <td>{plant.name}</td>
-                                    <td>{plant.scientificName}</td>
-                                    <td>{plant.type}</td>
-                                    <td>{plant.plantNames.join(', ')}</td>
-                                    <td>{plant.description}</td>
-                                    <td>
-                                        <button className="btn btn-primary">Editar</button>
-                                        <button className="btn btn-danger">Eliminar</button>
-                                    </td>
-                                </tr>
-                            ))}
+                        {plants.map((plant) => (
+                                    <tr key={plant.id}>
+                                        <td>{plant.data.name}</td>
+                                        <td>{plant.data.scientificName}</td>
+                                        <td>{plant.data.type}</td>
+                                        <td>{plant.data.plantNames.join(', ')}</td>
+                                        <td>{plant.data.description}</td>
+                                        <td>
+                                            <button className="btn btn-primary">Editar</button>
+                                            <button onClick={ ()=>deletePlant(plant.id)} className="btn btn-danger">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>

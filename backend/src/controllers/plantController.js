@@ -2,14 +2,35 @@ const {db}=require('../firebase');
 const Plant = require('../models/plant');
 
 const getPlants = async (req, res) => {
-    const plants = [];
-    const querySnapshot = await db.collection('plants').get();
-    querySnapshot.forEach(doc => {
-        const plant = new Plant(doc.data().name, doc.data().scientificName, doc.data().type, doc.data().plantNames ,doc.data().description, doc.data().imageNames);
-        plants.push(plant);
-    });
-    res.send(querySnapshot.docs.map(doc => doc.data()));
+    try {
+        const plants = [];
+        const querySnapshot = await db.collection('plants').get();
+
+        querySnapshot.forEach(doc => {
+            const plant = new Plant(
+                doc.data().name,
+                doc.data().scientificName,
+                doc.data().type,                
+                doc.data().description,
+                doc.data().plantNames,
+                doc.data().imageNames
+            );
+
+            const plantWithId = {
+                id: doc.id,
+                data: plant,
+            };
+
+            plants.push(plantWithId);
+        });
+
+        res.json(plants);
+    } catch (error) {
+        console.error('Error getting plants:', error);
+        res.status(500).send('Error al obtener las plantas.');
+    }
 };
+
 
 const createNewPlant = async (req, res) => {
     const newPlant = new Plant(
@@ -39,8 +60,32 @@ const updatePlant = async (req, res) => {
 };
 
 const deletePlant = async (req, res) => {
-    res.json();
+    const plantId = req.params.id;
+    console.log("aqui esta el id del parametro" + plantId);
+    const plantsCollection = db.collection('plants');
+    const plantDocRef = plantsCollection.doc(plantId);
+
+    try {
+        const deletedPlant = await plantDocRef.get();
+
+        if (!deletedPlant.exists) {
+            res.status(404).send('Planta no encontrada.');
+            return;
+        }
+
+        const deletedPlantData = deletedPlant.data();
+
+        await plantDocRef.delete();
+        console.log("planta eliminada" + deletedPlantData);
+        res.send(deletedPlantData);
+
+    } catch (error) {
+        console.error('Error deleting plant:', error);
+        res.status(500).send('Error al eliminar la planta.');
+    }
 };
+
+
 const getPlant = async (req, res) => {
     const plant = [];
     const querySnapshot = await db.collection('plants').doc(req.params.id).get();

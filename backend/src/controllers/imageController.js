@@ -59,8 +59,16 @@ const uploadImage = async (req, res) => {
 
         res.send(url);
     };
+
+    const deleteImage = async (req, res) => {
+        const filePath = `images/${req.params.name}`;
+        await bucket.file(filePath).delete();
+
+        res.send('Image deleted successfully');
+    };
     
 module.exports = {
     uploadImage,
-    showImage
+    showImage,
+    deleteImage
 }
