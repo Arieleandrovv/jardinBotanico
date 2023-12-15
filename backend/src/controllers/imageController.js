@@ -2,38 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const { bucket } = require('../firebase');
 
-/*
-const uploadImage = async (req, res) => {
-    try {
-        if (!req.files || Object.keys(req.files).length === 0) {
-            return res.status(400).send('No se ha enviado ninguna imagen.');
-        }
-
-        const imageNames = [];
-
-        for (const key in req.files) {
-            console.log(key);
-            const image = req.files[key];
-            const uploadPath = path.join(__dirname, 'uploads', image.name);
-
-            await image.mv(uploadPath);
-
-            const remotePath = `images/${image.name}`;
-            await bucket.upload(uploadPath, { destination: remotePath });
-
-            fs.unlinkSync(uploadPath);
-
-            imageNames.push(image.name);
-        }
-        console.log(imageNames);
-
-        res.send(imageNames);
-    } catch (error) {
-        console.error('Error uploading image:', error);
-        res.status(500).send('Error al subir la imagen.');
-    }
-};*/
-
 const uploadImage = async (req, res) => {
     try {
         if (!req.files || Object.keys(req.files).length === 0) {
@@ -50,18 +18,21 @@ const uploadImage = async (req, res) => {
             const name = req.body[`name-${index}`];
             const nombreSinEspacios = name.replace(/\s/g, '-');
             const description = req.body[`description-${index}`];
-            
-            const uploadPath = path.join(__dirname, 'uploads', `${nombreSinEspacios}.${extension}`);
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().replace(/:/g, '-');
+            const fileName = `${formattedDate}-${nombreSinEspacios}.${extension}`;
+
+            const uploadPath = path.join(__dirname, 'uploads', fileName);
 
             await image.mv(uploadPath);
 
-            const remotePath = `images/${nombreSinEspacios}.${extension}`;
+            const remotePath = `images/${fileName}`;
             await bucket.upload(uploadPath, { destination: remotePath });
 
             fs.unlinkSync(uploadPath);
 
             fileValues.push({
-                nameFile: `${nombreSinEspacios}.${extension}`,
+                nameFile: fileName,
                 name: name,
                 description: description,
             });
@@ -89,9 +60,6 @@ const uploadImage = async (req, res) => {
         res.send(url);
     };
     
-
-
-
 module.exports = {
     uploadImage,
     showImage
