@@ -2,30 +2,80 @@ const path = require('path');
 const fs = require('fs');
 const { bucket } = require('../firebase');
 
-
+/*
 const uploadImage = async (req, res) => {
-
-    if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).send('No se ha enviado ninguna imagen.');
-    }
-
-    const image = req.files.image;
-    const uploadPath = path.join(__dirname, 'uploads', image.name);
-
-    image.mv(uploadPath, async (err) => {
-        if (err) {
-            return res.status(500).send(err);
+    try {
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send('No se ha enviado ninguna imagen.');
         }
 
-        const remotePath = `images/${image.name}`;
-        const dataImage = await bucket.upload(uploadPath, { destination: remotePath });
-        console.log('dataImage', dataImage);
+        const imageNames = [];
 
-        fs.unlinkSync(uploadPath);
+        for (const key in req.files) {
+            console.log(key);
+            const image = req.files[key];
+            const uploadPath = path.join(__dirname, 'uploads', image.name);
 
-        res.send(image.name);
-    });
-}
+            await image.mv(uploadPath);
+
+            const remotePath = `images/${image.name}`;
+            await bucket.upload(uploadPath, { destination: remotePath });
+
+            fs.unlinkSync(uploadPath);
+
+            imageNames.push(image.name);
+        }
+        console.log(imageNames);
+
+        res.send(imageNames);
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).send('Error al subir la imagen.');
+    }
+};*/
+
+const uploadImage = async (req, res) => {
+    try {
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send('No se ha enviado ninguna imagen.');
+        }
+
+        const fileValues = [];
+
+        for (const key in req.files) {
+            const image = req.files[key];
+            const extension = image.name.split(".").pop();
+            
+            const index = key.split('-')[1];
+            const name = req.body[`name-${index}`];
+            const nombreSinEspacios = name.replace(/\s/g, '-');
+            const description = req.body[`description-${index}`];
+            
+            const uploadPath = path.join(__dirname, 'uploads', `${nombreSinEspacios}.${extension}`);
+
+            await image.mv(uploadPath);
+
+            const remotePath = `images/${nombreSinEspacios}.${extension}`;
+            await bucket.upload(uploadPath, { destination: remotePath });
+
+            fs.unlinkSync(uploadPath);
+
+            fileValues.push({
+                nameFile: `${nombreSinEspacios}.${extension}`,
+                name: name,
+                description: description,
+            });
+
+        }
+
+        res.send(fileValues);
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).send('Error al subir la imagen.');
+    }
+};
+
+
 
     const showImage = async (req, res) => {
         const options = {

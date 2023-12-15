@@ -12,11 +12,11 @@ function Plantas() {
     const [type, setType] = useState("");
     const [currentPlantNames, setCurrentPlantNames] = useState([]);
     const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
-    const [currentImageName, setCurrentImageName] = useState("");
+    const [currentImageName, setCurrentImageName] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
+    const [images, setImages] = useState([]);
 
-    useEffect(() => {
+   useEffect(() => {
         if (!currentImageName) {
             return;
         }
@@ -28,7 +28,36 @@ function Plantas() {
 
     }, [currentImageName]);
 
+    ////////////////////////////////////////
 
+    const handleAddPlantImage = () => {
+        setImages([...images, { file: null, name: "", description: "" }]);
+    };
+
+    const handleImageChange = (index, file) => {
+        const updatedImages = [...images];
+        updatedImages[index].file = file;
+        setImages(updatedImages);
+    };
+
+    const handleRemoveImage = (index) => {
+        const updatedImages = [...images];
+        updatedImages.splice(index, 1);
+        setImages(updatedImages);
+    };
+
+    const handleNameChange = (index, name) => {
+        const updatedImages = [...images];
+        updatedImages[index].name = name;
+        setImages(updatedImages);
+    };
+
+    const handleDescriptionChange = (index, description) => {
+        const updatedImages = [...images];
+        updatedImages[index].description = description;
+        setImages(updatedImages);
+    };
+    ////////////////////////////////////////
 
     const handleAddPlantName = () => {
         setCurrentPlantNames([...currentPlantNames, ""]);
@@ -46,27 +75,42 @@ function Plantas() {
         setCurrentPlantNames(updatedPlantNames);
     };
 
+    
+
     const store = async (e) => {
         e.preventDefault();
-        const dataImage = new FormData();
-        const plantImage = image.target.files[0];
-        dataImage.append('image', plantImage);
-
-        const responseName = await axios.post(`${endpoint}/upload`, dataImage, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+    
+        const promises = images.map(async (imageData, index) => {
+            const formData = new FormData();
+            formData.append(`image-${index}`, imageData.file);
+            formData.append(`name-${index}`, imageData.name);
+            formData.append(`description-${index}`, imageData.description);
+            console.log(formData);
+            try {
+                const responseName = await axios.post(`${endpoint}/upload`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+    
+                return responseName.data;
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                return null;
+            }
         });
-        setCurrentImageName(responseName.data);
+    
+        const imageNames = (await Promise.all(promises)).flat();
+         setCurrentImageName(imageNames[0].nameFile);
         const data = {
             name,
             scientificName,
             type,
             plantNames: [...currentPlantNames],
             description,
-            imageName: responseName.data
-
+            imageNames,
         };
+    
         await axios.post(`${endpoint}/new-plant`, data);
     };
     return (
@@ -107,18 +151,34 @@ function Plantas() {
                                 <label>Descripcion</label>
                                 <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
                             </div>
-
                             <div>
-                                <label>Subir Imagen</label>
-                                <input
-                                    type="file"
-                                    name="image"
-                                    id="imageInput"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={(e) => setImage(e)}
-                                />
+                                <button type="button" onClick={handleAddPlantImage}>Agregar Imagen</button>
                             </div>
+                            {images.map((imageData, index) => (
+                                <div key={index}>
+                                    <label>{`Subir Imagen ${index + 1}`}</label>
+                                    <input
+                                        type="file"
+                                        name={`image-${index}`}
+                                        accept="image/*"
+                                        onChange={(e) => handleImageChange(index, e.target.files[0])}
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder={`Nombre Imagen ${index + 1}`}
+                                        value={imageData.name}
+                                        onChange={(e) => handleNameChange(index, e.target.value)}
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder={`Descripción Imagen ${index + 1}`}
+                                        value={imageData.description}
+                                        onChange={(e) => handleDescriptionChange(index, e.target.value)}
+                                    />
+                                    <button type="button" onClick={() => handleRemoveImage(index)}>Eliminar</button>
+                                </div>
+                            ))}
+                            
                             <div>
                                 <button onClick={store} className="btn btn-primary mt-3">Guardar</button>
                             </div>
