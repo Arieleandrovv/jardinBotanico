@@ -18,7 +18,7 @@ const NavbarExUser = () => {
             <Link className="nav-link" to="/">Buscar</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/">Ingresar</Link>
+            <Link className="nav-link" to="/login">Ingresar</Link>
           </li>
         </ul>
       </div>

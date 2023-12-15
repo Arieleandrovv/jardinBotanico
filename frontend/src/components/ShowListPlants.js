@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { URL_BACKEND } from '../const';
+import '../styles/style.css';
 import Sidebar from "./NavigationComponentsAdmin/Side";
 import Navbar from "./NavigationComponentsAdmin/Navbar";
 
@@ -22,7 +23,7 @@ function ShowListPlants() {
             <div className="row">
                 <Sidebar />
                 <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <h1>Listado de Plantas</h1>
+                    <div className="titulo"><h1 >Listado de Plantas</h1></div>
                     <table className="table">
                         <thead>
                             <tr>
@@ -31,7 +32,7 @@ function ShowListPlants() {
                                 <th>Tipo</th>
                                 <th>Otros Nombres</th>
                                 <th>Descripción</th>
-                                <th>Aciones</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
