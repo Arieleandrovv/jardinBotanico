@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { URL_BACKEND } from '../const';
 import Sidebar from "./NavigationComponentsAdmin/Side";
@@ -24,7 +25,7 @@ function ShowListPlants() {
     };
 
     const deletePlant = async (id) => {        
-        const plantDeleted =await axios.delete(`${endpoint}/delete-plant/${id}`);
+        const plantDeleted =await axios.delete(`${endpoint}/delete-plant/${id}`); 
         for (const image of plantDeleted.data.imageNames){
             await axios.delete(`${endpoint}/image/${image.nameFile}`);
         }
@@ -60,7 +61,7 @@ function ShowListPlants() {
                                         <td>{plant.data.plantNames.join(', ')}</td>
                                         <td>{plant.data.description}</td>
                                         <td>
-                                            <button className="btn btn-primary">Editar</button>
+                                        <Link to={`/editarPlanta/${plant.id}`}className="btn btn-primary">Editar</Link>
                                             <button onClick={ ()=>deletePlant(plant.id)} className="btn btn-danger">Eliminar</button>
                                         </td>
                                     </tr>

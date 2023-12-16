@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { URL_BACKEND } from '../const';
 import Sidebar from "./NavigationComponentsAdmin/Side";
@@ -12,23 +13,45 @@ function Plantas() {
     const [type, setType] = useState("");
     const [currentPlantNames, setCurrentPlantNames] = useState([]);
     const [description, setDescription] = useState("");
-    const [currentImageName, setCurrentImageName] = useState([]);
-    const [imageUrl, setImageUrl] = useState("");
+    const [imageUrl, setImageUrl] = useState([]);
     const [images, setImages] = useState([]);
-    /*
-       useEffect(() => {
-            if (!currentImageName) {
-                return;
+    const [initImages, setInitImages] = useState([]);
+    const [eliminatedImages, setEliminatedImages] = useState([]);
+    const { id } = useParams();
+
+    useEffect(() => {
+        const fetchImageUrls = async () => {
+            const newImageUrls = [];
+            for (const image of images) {
+                const apiUrl = `${endpoint}/image/${image.nameFile}`;
+                try {
+                    const response = await fetch(apiUrl);
+                    const url = await response.text();
+                    newImageUrls.push(url);
+                } catch (error) {
+                    console.error('Error al obtener la URL de la imagen:', error);
+                }
             }
-            const apiUrl = `${endpoint}/image/${currentImageName}`;
-            fetch(apiUrl)
-                .then(response => response.text())
-                .then(url => setImageUrl(url))
-                .catch(error => console.error('Error al obtener la URL de la imagen:', error));
-    
-        }, [currentImageName]);*/
+            setImageUrl(prevImageUrl => [...prevImageUrl, ...newImageUrls]);
+        };
+        fetchImageUrls();
+    }, [images]);
 
     ////////////////////////////////////////
+
+    useEffect(() => {
+        const getPlantbyId = async () => {
+            const response = await axios.get(`${endpoint}/plant/${id}`);
+            setName(response.data.name);
+            setScientificName(response.data.scientificName);
+            setType(response.data.type);
+            setCurrentPlantNames(response.data.plantNames);
+            setDescription(response.data.description);
+            setImages(response.data.imageNames);
+            setInitImages(response.data.imageNames);
+        }
+        getPlantbyId();
+    }, []);
 
     const handleAddPlantImage = () => {
         setImages([...images, { file: null, name: "", description: "" }]);
@@ -39,12 +62,14 @@ function Plantas() {
         updatedImages[index].file = file;
         console.log(file);
         setImages(updatedImages);
+
     };
 
     const handleRemoveImage = (index) => {
         const updatedImages = [...images];
         updatedImages.splice(index, 1);
         setImages(updatedImages);
+        setEliminatedImages([...eliminatedImages, initImages[index]]);
     };
 
     const handleNameChange = (index, name) => {
@@ -101,7 +126,6 @@ function Plantas() {
         });
 
         const imageNames = (await Promise.all(promises)).flat();
-        setCurrentImageName(imageNames[0].nameFile);
         const data = {
             name,
             scientificName,
@@ -113,6 +137,53 @@ function Plantas() {
 
         await axios.post(`${endpoint}/new-plant`, data);
     };
+
+    const update = async (e) => {
+        e.preventDefault();
+        const promises = images.map(async (imageData, index) => {
+            if (imageData.file) {
+                await axios.delete(`${endpoint}/image/${initImages[index].nameFile}`);
+                const formData = new FormData();
+                formData.append(`image-${index}`, imageData.file);
+                formData.append(`name-${index}`, imageData.name);
+                formData.append(`description-${index}`, imageData.description);
+                try {
+                    const responseName = await axios.post(`${endpoint}/upload`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+                    return responseName.data;
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    return null;
+                }
+            } 
+            return null;           
+        });
+
+        const updatedImages = (await Promise.all(promises)).flat();
+        
+        const imageNames = [];
+        for (let index = 0; index < updatedImages.length; index++) {
+            if (updatedImages[index]===null) {
+                imageNames.push(images[index]);
+            }else {
+                imageNames.push(updatedImages[index]);
+            }
+        }
+        console.log(imageNames);
+        const data = {
+            name,
+            scientificName,
+            type,
+            plantNames: [...currentPlantNames],
+            description,
+            imageNames
+        };
+
+        await axios.put(`${endpoint}/update-plant/${id}`, data);
+    }
     return (
         <div>
             <Navbar />
@@ -164,7 +235,13 @@ function Plantas() {
                                             accept="image/*"
                                             onChange={(e) => handleImageChange(index, e.target.files[0])}
                                         />
-                                        <div>{imageData.file && <img src={URL.createObjectURL(imageData.file)} alt="Imagen" />}</div>
+                                        <div>
+                                            {imageData.file ? (
+                                                <img src={URL.createObjectURL(imageData.file)} alt="Imagen" />
+                                            ) : (
+                                                imageUrl[index] && <img src={imageUrl[index]} alt="Imagen" />
+                                            )}
+                                        </div>
                                     </div>
                                     <div>
                                         <input
@@ -185,13 +262,8 @@ function Plantas() {
                             ))}
 
                             <div>
-                                <button onClick={store} className="btn btn-primary mt-3">Guardar</button>
+                                <button onClick={update} className="btn btn-primary mt-3">Actualizar</button>
                             </div>
-
-                            <div>
-                                {imageUrl && <img src={imageUrl} alt="Imagen" />}
-                            </div>
-
                         </div>
                     </div>
                 </div>

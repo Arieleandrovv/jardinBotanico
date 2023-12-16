@@ -66,6 +66,10 @@ const uploadImage = async (req, res) => {
 
         res.send('Image deleted successfully');
     };
+
+    const updateImage = async (req, res) => {
+        
+    };
     
 module.exports = {
     uploadImage,
