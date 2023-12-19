@@ -1,11 +1,11 @@
 
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ShowListPlants from './components/ComponentsExternalUser/ShowListPlants';
+import ShowListPlants from './components/ComponentsAdminUser/ShowListPlants';
 import Plant from './components/ComponentsAdminUser/RegisterPlant';
 import Home from './components/ComponentsExternalUser/Home';
-import EditPlant from './components/EditPlant';
-import ShowPlant from './components/ComponentsAdminUser/ShowPlant';
+import EditPlant from './components/ComponentsAdminUser/EditPlant';
+import ShowPlant from './components/ComponentsExternalUser/ShowPlant';
 import 'bootstrap/dist/css/bootstrap.css';
 function App() {
 
