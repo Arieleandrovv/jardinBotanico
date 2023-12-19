@@ -47,6 +47,9 @@ function Planta() {
               )}
             </div>
           </div>
+          <div className="event-info-container">
+                <div className="event-description" style={{ textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: plant.description }} />
+          </div>
           {/*<p><strong>Descripción:</strong> {descripcion}</p>
         
         

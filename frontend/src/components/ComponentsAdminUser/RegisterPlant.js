@@ -5,6 +5,7 @@ import { URL_BACKEND } from '../../const';
 import Sidebar from "../NavigationComponentsAdmin/Side";
 import Navbar from "../NavigationComponentsAdmin/Navbar";
 import Spinner from "../Spinner";
+import { Editor } from '@tinymce/tinymce-react';
 
 const endpoint = URL_BACKEND;
 
@@ -126,9 +127,9 @@ function Plantas() {
             <div className="container-fluid">
                 <div className="row">
                     <Sidebar />
-                    <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                        <h1 className="mt-4 mb-4 center">Registro de Plantas</h1>
-                        <div className="d-flex flex-column align-items-center">
+                    <div className="d-flex flex-column align-items-center col-md-10">
+                        <h1 className="mt-4 mb-4">Registro de Plantas</h1>
+                        <div className="">
                             {isLoading ? (
                                 <Spinner />
                             ) : (<div>
@@ -158,7 +159,23 @@ function Plantas() {
 
                                 <div>
                                     <label>Descripcion</label>
-                                    <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                                    {/*<input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />*/}
+                                    <Editor
+                                        apiKey="7djxtbl1wqcvwy12bl846kkage2t8v547hupt6z4dzxs0t7f"
+                                        init={{
+                                            height: 500,
+                                            menubar: false,
+                                            plugins: [
+                                                'advlist autolink lists link image charmap print preview anchor',
+                                                'searchreplace visualblocks code fullscreen',
+                                                'insertdatetime media table paste code help wordcount'
+                                            ],
+                                            toolbar:
+                                                'undo redo | formatselect | bold italic backcolor | \
+                                                alignleft aligncenter alignright alignjustify | \
+                                                bullist numlist outdent indent | removeformat | help'
+                                        }}
+                                        onEditorChange={(value) => setDescription(value)}/>
                                 </div>
                                 <div>
                                     <button type="button" onClick={handleAddPlantImage}>Agregar Imagen</button>
