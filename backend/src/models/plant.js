@@ -5,7 +5,7 @@ class Plant {
         this.type = type;
         this.description = description;
         this.plantNames = plantNames || [];
-        this.imageNames = imageNames|| [[]];
+        this.imageNames = imageNames|| [[]]; 
     }
     addIndiginousName(plantName) {
         this.plantNames.push(plantName);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
+import {useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { URL_BACKEND } from '../const';
 import Sidebar from "./NavigationComponentsAdmin/Side";
@@ -18,6 +18,7 @@ function Plantas() {
     const [initImages, setInitImages] = useState([]);
     const [eliminatedImages, setEliminatedImages] = useState([]);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchImageUrls = async () => {
@@ -183,6 +184,7 @@ function Plantas() {
         };
 
         await axios.put(`${endpoint}/update-plant/${id}`, data);
+        navigate('/plantas');
     }
     return (
         <div>

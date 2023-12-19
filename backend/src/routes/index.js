@@ -15,7 +15,7 @@ router.get('/plant/:id',plantController.getPlant);
 router.get('/users',userController.getUsers);
 router.post('/new-user',userController.createNewUser);
 router.put('/update-user/:id',userController.updateUser);
-router.delete('/delete-user/:id',userController.deleteUser);
+router.delete('/delete-user/:id',userController.deleteUser); 
 
 router.post('/login',authController.login);
 router.post('/logout',authController.logout);

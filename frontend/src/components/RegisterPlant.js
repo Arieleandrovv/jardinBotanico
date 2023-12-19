@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { URL_BACKEND } from '../const';
 import Sidebar from "./NavigationComponentsAdmin/Side";
 import Navbar from "./NavigationComponentsAdmin/Navbar";
+import Spinner from "./Spinner";
 
 const endpoint = URL_BACKEND;
 
@@ -14,7 +16,9 @@ function Plantas() {
     const [description, setDescription] = useState("");
     const [currentImageName, setCurrentImageName] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState([]);
+    const navigate = useNavigate();
     /*
        useEffect(() => {
             if (!currentImageName) {
@@ -80,7 +84,7 @@ function Plantas() {
 
     const store = async (e) => {
         e.preventDefault();
-
+        setIsLoading(true);
         const promises = images.map(async (imageData, index) => {
             const formData = new FormData();
             formData.append(`image-${index}`, imageData.file);
@@ -95,6 +99,7 @@ function Plantas() {
 
                 return responseName.data;
             } catch (error) {
+                setIsLoading(false);
                 console.error('Error uploading image:', error);
                 return null;
             }
@@ -112,6 +117,8 @@ function Plantas() {
         };
 
         await axios.post(`${endpoint}/new-plant`, data);
+        setIsLoading(false);
+        navigate('/plantas');
     };
     return (
         <div>
@@ -119,80 +126,88 @@ function Plantas() {
             <div className="container-fluid">
                 <div className="row">
                     <Sidebar />
+
                     <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+
                         <h1 className="mt-4 mb-4 center">Registro de Plantas</h1>
                         <div className="d-flex flex-column align-items-center">
-
-                            <div>
-                                <label>Nombre</label>
-                                <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
-                            </div>
-                            <div>
-                                <label>Nombre Cientifico</label>
-                                <input type="text" name="scientific" value={scientificName} onChange={(e) => setScientificName(e.target.value)} />
-                            </div>
-                            <div>
-                                <label>Tipo</label>
-                                <input type="text" name="type" value={type} onChange={(e) => setType(e.target.value)} />
-                            </div>
-                            <div>
-                                <label>Otros Nombres</label>
-                                <button type="button" onClick={handleAddPlantName}>Agregar Nombre</button>
-                            </div>
-                            {currentPlantNames.map((plant, index) => (
-                                <div key={index}>
-                                    <label>{`Otro Nombre ${index + 1}:`}</label>
-                                    <input type="text" value={plant} onChange={(e) => handlePlantNameChange(index, e.target.value)} />
-                                    <button type="button" onClick={() => handleRemovePlantName(index)}>Eliminar</button>
+                            {isLoading ? (
+                                <Spinner />
+                            ) : (<div>
+                                <div>
+                                    <label>Nombre</label>
+                                    <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
                                 </div>
-                            ))}
-
-                            <div>
-                                <label>Descripcion</label>
-                                <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                            </div>
-                            <div>
-                                <button type="button" onClick={handleAddPlantImage}>Agregar Imagen</button>
-                            </div>
-                            {images.map((imageData, index) => (
-                                <div key={index}>
-                                    <label>{`Subir Imagen ${index + 1}`}</label>
-                                    <div>
-                                        <input
-                                            type="file"
-                                            name={`image-${index}`}
-                                            accept="image/*"
-                                            onChange={(e) => handleImageChange(index, e.target.files[0])}
-                                        />
-                                        <div>{imageData.file && <img src={URL.createObjectURL(imageData.file)} alt="Imagen" />}</div>
-                                    </div>
-                                    <div>
-                                        <input
-                                            type="text"
-                                            placeholder={`Nombre Imagen ${index + 1}`}
-                                            value={imageData.name}
-                                            onChange={(e) => handleNameChange(index, e.target.value)}
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder={`Descripción Imagen ${index + 1}`}
-                                            value={imageData.description}
-                                            onChange={(e) => handleDescriptionChange(index, e.target.value)}
-                                        />
-                                    </div>
-                                    <button type="button" onClick={() => handleRemoveImage(index)}>Eliminar</button>
+                                <div>
+                                    <label>Nombre Cientifico</label>
+                                    <input type="text" name="scientific" value={scientificName} onChange={(e) => setScientificName(e.target.value)} />
                                 </div>
-                            ))}
+                                <div>
+                                    <label>Tipo</label>
+                                    <input type="text" name="type" value={type} onChange={(e) => setType(e.target.value)} />
+                                </div>
+                                <div>
+                                    <label>Otros Nombres</label>
+                                    <button type="button" onClick={handleAddPlantName}>Agregar Nombre</button>
+                                </div>
+                                {currentPlantNames.map((plant, index) => (
+                                    <div key={index}>
+                                        <label>{`Otro Nombre ${index + 1}:`}</label>
+                                        <input type="text" value={plant} onChange={(e) => handlePlantNameChange(index, e.target.value)} />
+                                        <button type="button" onClick={() => handleRemovePlantName(index)}>Eliminar</button>
+                                    </div>
+                                ))}
 
-                            <div>
-                                <button onClick={store} className="btn btn-primary mt-3">Guardar</button>
-                            </div>
+                                <div>
+                                    <label>Descripcion</label>
+                                    <input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                                </div>
+                                <div>
+                                    <button type="button" onClick={handleAddPlantImage}>Agregar Imagen</button>
+                                </div>
+                                {images.map((imageData, index) => (
+                                    <div key={index}>
+                                        <label>{`Subir Imagen ${index + 1}`}</label>
+                                        <div>
+                                            <input
+                                                type="file"
+                                                name={`image-${index}`}
+                                                accept="image/*"
+                                                onChange={(e) => handleImageChange(index, e.target.files[0])}
+                                            />
+                                            <div>{imageData.file && <img src={URL.createObjectURL(imageData.file)} alt="Imagen" />}</div>
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                placeholder={`Nombre Imagen ${index + 1}`}
+                                                value={imageData.name}
+                                                onChange={(e) => handleNameChange(index, e.target.value)}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder={`Descripción Imagen ${index + 1}`}
+                                                value={imageData.description}
+                                                onChange={(e) => handleDescriptionChange(index, e.target.value)}
+                                            />
+                                        </div>
+                                        <button type="button" onClick={() => handleRemoveImage(index)}>Eliminar</button>
+                                    </div>
+                                ))}
 
-                            <div>
-                                {imageUrl && <img src={imageUrl} alt="Imagen" />}
-                            </div>
+                                <div>
+                                    <button onClick={store} className="btn btn-primary mt-3" disabled={isLoading} >Guardar</button>
+                                </div>
 
+                                <div>
+                                    {imageUrl && <img src={imageUrl} alt="Imagen" />}
+                                </div>
+                            </div>)}
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
