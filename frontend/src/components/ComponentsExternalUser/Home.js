@@ -1,7 +1,7 @@
 import React from "react";
-import { URL_BACKEND } from '../const';
-import NavbarExUser from "./NavigationComponentsExUser/NavbarExUser";
-import FooterExUser from "./NavigationComponentsExUser/FooterExUser";
+import { URL_BACKEND } from '../../const';
+import NavbarExUser from "../NavigationComponentsExUser/NavbarExUser";
+import FooterExUser from "../NavigationComponentsExUser/FooterExUser";
 const endpoint = URL_BACKEND;
 
 function Home() {

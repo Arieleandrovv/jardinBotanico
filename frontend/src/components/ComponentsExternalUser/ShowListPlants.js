@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import { URL_BACKEND } from '../const';
-import Sidebar from "./NavigationComponentsAdmin/Side";
-import Navbar from "./NavigationComponentsAdmin/Navbar";
+import { URL_BACKEND } from '../../const';
+import Sidebar from "../NavigationComponentsAdmin/Side";
+import Navbar from "../NavigationComponentsAdmin/Navbar";
 
 
 const endpoint = URL_BACKEND;

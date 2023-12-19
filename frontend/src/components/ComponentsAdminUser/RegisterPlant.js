@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { URL_BACKEND } from '../const';
-import Sidebar from "./NavigationComponentsAdmin/Side";
-import Navbar from "./NavigationComponentsAdmin/Navbar";
-import Spinner from "./Spinner";
+import { URL_BACKEND } from '../../const';
+import Sidebar from "../NavigationComponentsAdmin/Side";
+import Navbar from "../NavigationComponentsAdmin/Navbar";
+import Spinner from "../Spinner";
 
 const endpoint = URL_BACKEND;
 
@@ -126,10 +126,7 @@ function Plantas() {
             <div className="container-fluid">
                 <div className="row">
                     <Sidebar />
-
                     <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
-
-
                         <h1 className="mt-4 mb-4 center">Registro de Plantas</h1>
                         <div className="d-flex flex-column align-items-center">
                             {isLoading ? (
@@ -205,9 +202,6 @@ function Plantas() {
                                 </div>
                             </div>)}
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
