@@ -159,7 +159,7 @@ function Plantas() {
 
                                 <div>
                                     <label>Descripcion</label>
-                                    {/*<input type="text" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />*/}
+                                    
                                     <Editor
                                         apiKey="7djxtbl1wqcvwy12bl846kkage2t8v547hupt6z4dzxs0t7f"
                                         init={{
@@ -168,12 +168,13 @@ function Plantas() {
                                             plugins: [
                                                 'advlist autolink lists link image charmap print preview anchor',
                                                 'searchreplace visualblocks code fullscreen',
-                                                'insertdatetime media table paste code help wordcount'
+                                                'insertdatetime media table paste code help wordcount',
+                                                'textcolor'
                                             ],
                                             toolbar:
-                                                'undo redo | formatselect | bold italic backcolor | \
+                                                'undo redo | formatselect | bold italic backcolor forecolor \
                                                 alignleft aligncenter alignright alignjustify | \
-                                                bullist numlist outdent indent | removeformat | help'
+                                                bullist numlist outdent indent | removeformat'
                                         }}
                                         onEditorChange={(value) => setDescription(value)}/>
                                 </div>
@@ -209,7 +210,6 @@ function Plantas() {
                                         <button type="button" onClick={() => handleRemoveImage(index)}>Eliminar</button>
                                     </div>
                                 ))}
-
                                 <div>
                                     <button onClick={store} className="btn btn-primary mt-3" disabled={isLoading} >Guardar</button>
                                 </div>
