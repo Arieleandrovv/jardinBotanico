@@ -48,35 +48,35 @@ function Plantas() {
                 <div className="row">
                     <Sidebar />
                     <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                        <h1 className="mt-4 mb-4 center">Registro de Plantas</h1>
-                        <div className="d-flex flex-column align-items-center">
+                        <h2 className="mt-4 mb-4 center">Registro de Plantas</h2>
+                        <div className="d-flex flex-column ">
                             <form onSubmit={store} className="w-50">
                             <div className="formulario">
                                 <div>
-                                    <input type="text" name="name" placeholder="Nombre"value={name} onChange={(e) => setName(e.target.value)} />
+                                    <input type="text" name="name" placeholder="  Nombre  "value={name} onChange={(e) => setName(e.target.value)} />
                                 </div>
                                 <div>
-                                    <input type="text" name="scientific" placeholder= "Nombre científico" value={scientificName} onChange={(e) => setScientificName(e.target.value)} />
+                                    <input type="text" name="scientific" placeholder= "  Nombre científico" value={scientificName} onChange={(e) => setScientificName(e.target.value)} />
                                 </div>
                                 <div>
-                                    <input type="text" name="type" placeholder="Tipo de planta" value={type} onChange={(e) => setType(e.target.value)} />
+                                    <input type="text" name="type" placeholder="  Tipo de planta" value={type} onChange={(e) => setType(e.target.value)} />
                                 </div>
                                 {currentPlantNames.map((plant, index) => (
                                     <div key={index}>
                                         <label>{`Otro Nombre ${index + 1}:`}</label>
-                                        <input type="text" value={plant} placeholder="Nombre" onChange={(e) => handlePlantNameChange(index, e.target.value)} />
+                                        <input type="text" value={plant} placeholder="  Nombre " onChange={(e) => handlePlantNameChange(index, e.target.value)} />
                                         <button className="button" type="button" onClick={() => handleRemovePlantName(index)}>Eliminar</button>
                                     </div>
                                 ))}
                                 <div>
-                                    <label>Otros Nombres</label>
-                                    <button type="button" onClick={handleAddPlantName}>Agregar Nombre</button>
+                                    <label>Otros Nombres  </label>
+                                    <button className="button" type="button" onClick={handleAddPlantName}>  Agregar Nombre </button>
                                 </div>
                             </div>
-                                <div className="desc">
-                                    <input type="text" name="description" placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)} />
+                                <div className="descripcion">
+                                    <input type="text" name="description" placeholder=" Descripción " value={description} onChange={(e) => setDescription(e.target.value)} />
                                 </div>
-                                <button type="submit" className="btn btn-primary mt-3">Guardar</button>
+                                <button type="submit" className="btn btn-outline-success mt-3">Guardar</button>
                             </form>
                         </div>
                     </div>

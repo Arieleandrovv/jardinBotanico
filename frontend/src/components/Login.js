@@ -17,34 +17,13 @@ function Login(){
     const { login } = useAuth();
     const navigate = navigate();
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-    
-        try {
-          const response = await axios.post(endpoint, {
-            email: email, 
-            password: password, 
-          });
-        
-        const token = response.data.token;
-        const id=response.data.user_id;
-        localStorage.setItem('token', token);
-        localStorage.setItem('id',id);
-        //setIsAuthenticated(true);
-        const currentPath = window.location.pathname;
-        navigate('/plants');
-        window.location.reload();
-
-    } catch (error) {
-      setError("Credenciales incorrectas. Inténtalo de nuevo.");
-    }
-    };
+   
     return (
         <div>
           <Navbar />
           <div className="container login">
             <div className="heading">Iniciar Sesion: </div>
-            <form action="" className="form" onSubmit={handleLogin}>
+            <form action="" className="form" >
               <input
                 required=""
                 className="input"

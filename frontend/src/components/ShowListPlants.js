@@ -23,7 +23,7 @@ function ShowListPlants() {
             <div className="row">
                 <Sidebar />
                 <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <div className="titulo"><h1 >Listado de Plantas</h1></div>
+                    <div className="titulo"><h2>Listado de Plantas</h2></div>
                     <table className="table">
                         <thead>
                             <tr>

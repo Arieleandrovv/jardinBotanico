@@ -5,25 +5,22 @@
     border-radius: 40px;
     padding: 25px 35px;
     border: 5px solid rgb(255, 255, 255);
-    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
-    margin: 0 auto; /* Centra horizontalmente el contenedor */
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 50px;
   }
-  .titulo, h1{
+  .titulo, h2{
     margin: 1%;
-    border: solid #E9F6C7 ;
     background-color: #E9F6C7;
+    width: 100%;
     color: black;
     animation-iteration-count: initial;
     text-align: center;
   }
- div{
-    margin-top:4px;
- }
+ 
   .table{
     margin: 1%;
   }
@@ -36,28 +33,44 @@
     margin-bottom: 1%;
   }
 .button{
-    border-radius: 30px;
-    border-color:solid blueviolet;
+    border-radius: 20px;
+    background-color: #E9F6C7;
+    margin-left: 3px;
 }
-.title{
-    height: 50px;
-    margin-top: 7px;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana;
-    text-shadow: #000000;
-    font-style:oblique;
-    font-size: xx-large;
-    place-items:initial;
-    font: optional;
-    text-size-adjust:inherit;
+.descripcion{
+
+ position:relative;
+ left: 80px;
+ top: 5px;
 }
-.desc{
- left: 5%;
+.titulo-img{
+  position: relative;
+  max-width: auto;
+  max-height: 280px;
+}
+.title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial;
+  font:900;
+  letter-spacing: 20px;
+  color: #0f1222;
+  text-decoration-style: dotted;
+}
+  
+input{
+ border-radius: 5px;
+  
 }
 .what-is-in-bloom{
     display: grid;
-    grid-gap: 5px;
-    grid-template-columns: auto auto auto auto auto;
-    grid-template-rows: auto auto auto;
+    
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: repeat(4,0.5fr);
+    gap: 5px;
     overflow: hidden;
 }
 *{
@@ -65,11 +78,11 @@
 }
 .layout--onecol .layout__region {
     width: 100%;
-    height: 45%;
+    height: 25%;
 }
 
 .layout__region--content {
-    display: flex;
+    display: static;
     flex-direction: column;
 }
 .what-is-in-bloom .card.card--what-is-in-bloom.card--without-cta {

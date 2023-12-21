@@ -5,6 +5,7 @@ import ShowListPlants from './components/ShowListPlants';
 import Plant from './components/RegisterPlant';
 import Home from './components/Home';
 import Login from './components/Login';
+import Histori from './components/Historia';
 import 'bootstrap/dist/css/bootstrap.css';
 function App() {
   const isAuthenticated = localStorage.getItem('token');
@@ -16,6 +17,7 @@ function App() {
             <Routes>
             <Route path="/" element={<Home />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/historia' element={<Histori />} />
               <Route path='/plantas' element={<ShowListPlants />} />
               <Route path='/registroPlanta' element={<Plant />} />
             </Routes>
