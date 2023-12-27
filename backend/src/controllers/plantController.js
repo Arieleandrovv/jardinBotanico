@@ -129,22 +129,19 @@ const searchPlants = async (req, res) => {
 
     try {
         const plants = [];
-        const querySnapshot = await db.collection('plants').where('name', '>=', searchTerm).get();
+        
+        const nameQuerySnapshot = await db.collection('plants').where('name', '>=', searchTerm).get();
+        nameQuerySnapshot.forEach(doc => {
+            const plant = createPlantObject(doc);
+            plants.push(plant);
+        });
 
-        querySnapshot.forEach(doc => {
-            const plant = new Plant(
-                doc.data().name,
-                doc.data().scientificName,
-                doc.data().type,
-                doc.data().description,
-                doc.data().plantNames,
-                doc.data().imageNames
-            );
-            const plantWithId = {
-                id: doc.id,
-                data: plant,
-            };
-            plants.push(plantWithId);
+        const plantNamesQuerySnapshot = await db.collection('plants').where('plantNames', 'array-contains', searchTerm).get();
+        plantNamesQuerySnapshot.forEach(doc => {
+            const plant = createPlantObject(doc);
+            if (!plants.some(existingPlant => existingPlant.id === plant.id)) {
+                plants.push(plant);
+            }
         });
 
         res.json(plants);
@@ -152,6 +149,21 @@ const searchPlants = async (req, res) => {
         console.error('Error searching plants:', error);
         res.status(500).send('Error al buscar las plantas.');
     }
+};
+
+const createPlantObject = (doc) => {
+    const plant = new Plant(
+        doc.data().name,
+        doc.data().scientificName,
+        doc.data().type,
+        doc.data().description,
+        doc.data().plantNames,
+        doc.data().imageNames
+    );
+    return {
+        id: doc.id,
+        data: plant,
+    };
 };
 
 module.exports = {

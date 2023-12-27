@@ -4,6 +4,8 @@ import axios from 'axios';
 import { URL_BACKEND } from '../../const';
 import NavbarExUser from "../NavigationComponentsExUser/NavbarExUser";
 import FooterExUser from "../NavigationComponentsExUser/FooterExUser";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 const endpoint = URL_BACKEND;
 
 function Home() {
@@ -44,7 +46,7 @@ function Home() {
           <div className="d-flex justify-content-center">
             <div className="col-md-6">
               <input type="text" className="form-control mb-4" placeholder="Buscar" onChange={handleSearchedPlant} /></div>
-            <button className="btn btn-primary mb-4" onClick={handleSearchPlant}>Buscar</button>
+            <button className="btn btn-primary mb-4" onClick={handleSearchPlant}><FontAwesomeIcon icon={faSearch} /></button>
           </div>
           <div className="d-flex justify-content-center">
             <div className="col-md-8" >

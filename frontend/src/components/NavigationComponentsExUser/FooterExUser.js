@@ -1,8 +1,9 @@
 import React from "react";
+import "../../styles/navigation.css";
 
 const FooterExUser = () => {
     return (
-        <footer className="footer navbar navbar-expand-lg navbar-dark bg-dark">
+        <footer className="footer">
             <div className="container justify-content-center">
                 <div className="row col-md-12">
                     <div className="col">
