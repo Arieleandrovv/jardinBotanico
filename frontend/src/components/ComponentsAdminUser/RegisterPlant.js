@@ -166,10 +166,6 @@ function Plantas() {
                                             height: 500,
                                             menubar: false,
                                             plugins: [
-                                                'advlist autolink lists link image charmap print preview anchor',
-                                                'searchreplace visualblocks code fullscreen',
-                                                'insertdatetime media table paste code help wordcount',
-                                                'textcolor'
                                             ],
                                             toolbar:
                                                 'undo redo | formatselect | bold italic backcolor forecolor \

@@ -39,8 +39,8 @@ function ShowListPlants() {
         <div className="container-fluid">
             <div className="row">
                 <Sidebar />
-                <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <h1>Listado de Plantas</h1>
+                <div className="d-flex flex-column align-items-center col-md-10">
+                        <h1 className="mt-4 mb-4">Listado de Plantas</h1>
                     <table className="table">
                         <thead>
                             <tr>
@@ -48,7 +48,6 @@ function ShowListPlants() {
                                 <th>Nombre Científico</th>
                                 <th>Tipo</th>
                                 <th>Otros Nombres</th>
-                                <th>Descripción</th>
                                 <th>Aciones</th>
                             </tr>
                         </thead>
@@ -59,7 +58,6 @@ function ShowListPlants() {
                                         <td>{plant.data.scientificName}</td>
                                         <td>{plant.data.type}</td>
                                         <td>{plant.data.plantNames.join(', ')}</td>
-                                        <td>{plant.data.description}</td>
                                         <td>
                                         <Link to={`/editarPlanta/${plant.id}`}className="btn btn-primary">Editar</Link>
                                             <button onClick={ ()=>deletePlant(plant.id)} className="btn btn-danger">Eliminar</button>

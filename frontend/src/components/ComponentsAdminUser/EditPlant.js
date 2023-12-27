@@ -103,42 +103,6 @@ function Plantas() {
     };
 
 
-
-    const store = async (e) => {
-        e.preventDefault();
-
-        const promises = images.map(async (imageData, index) => {
-            const formData = new FormData();
-            formData.append(`image-${index}`, imageData.file);
-            formData.append(`name-${index}`, imageData.name);
-            formData.append(`description-${index}`, imageData.description);
-            try {
-                const responseName = await axios.post(`${endpoint}/upload`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                });
-
-                return responseName.data;
-            } catch (error) {
-                console.error('Error uploading image:', error);
-                return null;
-            }
-        });
-
-        const imageNames = (await Promise.all(promises)).flat();
-        const data = {
-            name,
-            scientificName,
-            type,
-            plantNames: [...currentPlantNames],
-            description,
-            imageNames,
-        };
-
-        await axios.post(`${endpoint}/new-plant`, data);
-    };
-
     const update = async (e) => {
         e.preventDefault();
         const promises = images.map(async (imageData, index) => {

@@ -6,6 +6,7 @@ import Plant from './components/ComponentsAdminUser/RegisterPlant';
 import Home from './components/ComponentsExternalUser/Home';
 import EditPlant from './components/ComponentsAdminUser/EditPlant';
 import ShowPlant from './components/ComponentsExternalUser/ShowPlant';
+import SearchPlant from './components/ComponentsExternalUser/SearchPlant';
 import 'bootstrap/dist/css/bootstrap.css';
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
               <Route path='/registroPlanta' element={<Plant />} />
               <Route path='/editarPlanta/:id' element={<EditPlant />} />
               <Route path='/planta/:id' element={<ShowPlant />} />
+              <Route path='/buscarPlanta' element={<SearchPlant />} />
             </Routes>
       </Router>
   );
