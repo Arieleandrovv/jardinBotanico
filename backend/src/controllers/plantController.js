@@ -15,12 +15,10 @@ const getPlants = async (req, res) => {
                 doc.data().plantNames,
                 doc.data().imageNames
             );
-
             const plantWithId = {
                 id: doc.id,
                 data: plant,
             };
-
             plants.push(plantWithId);
         });
 
@@ -113,7 +111,6 @@ const deletePlant = async (req, res) => {
     }
 };
 
-
 const getPlant = async (req, res) => {    
     const querySnapshot = await db.collection('plants').doc(req.params.id).get();
     const plantDoc = new Plant(
@@ -127,10 +124,41 @@ const getPlant = async (req, res) => {
     res.json(plantDoc);
 };
 
+const searchPlants = async (req, res) => {
+    const searchTerm = req.query.q;
+
+    try {
+        const plants = [];
+        const querySnapshot = await db.collection('plants').where('name', '>=', searchTerm).get();
+
+        querySnapshot.forEach(doc => {
+            const plant = new Plant(
+                doc.data().name,
+                doc.data().scientificName,
+                doc.data().type,
+                doc.data().description,
+                doc.data().plantNames,
+                doc.data().imageNames
+            );
+            const plantWithId = {
+                id: doc.id,
+                data: plant,
+            };
+            plants.push(plantWithId);
+        });
+
+        res.json(plants);
+    } catch (error) {
+        console.error('Error searching plants:', error);
+        res.status(500).send('Error al buscar las plantas.');
+    }
+};
+
 module.exports = {
     getPlants,
     createNewPlant,
     updatePlant,
     deletePlant,
-    getPlant
+    getPlant,
+    searchPlants
 };

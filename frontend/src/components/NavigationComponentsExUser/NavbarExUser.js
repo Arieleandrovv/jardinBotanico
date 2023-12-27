@@ -9,7 +9,7 @@ const NavbarExUser = () => {
       <Link className="navbar-brand" to="/">
         <img src={logo} alt="Logo" width="100" height="100" className="d-inline-block align-top" />
       </Link>
-      <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div className="navbar-collapse justify-content-end" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
             <Link className="nav-link" to="/">Historia</Link>

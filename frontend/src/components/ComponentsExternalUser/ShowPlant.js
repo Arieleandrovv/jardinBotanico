@@ -63,6 +63,8 @@ function Planta() {
           <div className="container-fluid">
             <h2>{name}</h2>
             <div className="container col-md-8 ">
+              
+            <div className="d-flex flex-row p-2"><p><strong>Nombre Cientifico:</strong> {scientificName}</p></div>
               <div className="d-flex flex-row p-2"><p><strong>Tipo:</strong> {type}</p></div>
               <div className="d-flex flex-row">
                 <div className="p-2" ><p><strong>Otros nombres:</strong></p></div>

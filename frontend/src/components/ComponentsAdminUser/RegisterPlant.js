@@ -20,20 +20,6 @@ function Plantas() {
     const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState([]);
     const navigate = useNavigate();
-    /*
-       useEffect(() => {
-            if (!currentImageName) {
-                return;
-            }
-            const apiUrl = `${endpoint}/image/${currentImageName}`;
-            fetch(apiUrl)
-                .then(response => response.text())
-                .then(url => setImageUrl(url))
-                .catch(error => console.error('Error al obtener la URL de la imagen:', error));
-    
-        }, [currentImageName]);*/
-
-    ////////////////////////////////////////
 
     const handleAddPlantImage = () => {
         setImages([...images, { file: null, name: "", description: "" }]);
@@ -63,7 +49,6 @@ function Plantas() {
         updatedImages[index].description = description;
         setImages(updatedImages);
     };
-    ////////////////////////////////////////
 
     const handleAddPlantName = () => {
         setCurrentPlantNames([...currentPlantNames, ""]);
