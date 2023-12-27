@@ -4,8 +4,8 @@ import "../../styles/navigation.css";
 const FooterExUser = () => {
     return (
         <footer className="footer">
-            <div className="container justify-content-center">
-                <div className="row col-md-12">
+            <div className="container">
+                <div className="row">
                     <div className="col">
                         <p className="text-white">Horario</p>
                         <p className="text-white">Lunes-Viernes</p>
