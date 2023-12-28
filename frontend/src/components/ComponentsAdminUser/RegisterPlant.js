@@ -114,57 +114,89 @@ function Plantas() {
                     <Sidebar />
                     <div className="d-flex flex-column align-items-center col-md-10">
                         <h1 className="mt-4 mb-4">Registro de Plantas</h1>
-                        <div className="">
-                            {isLoading ? (
-                                <Spinner />
-                            ) : (<div>
-                                <div>
-                                    <label>Nombre</label>
-                                    <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
-                                </div>
-                                <div>
-                                    <label>Nombre Cientifico</label>
-                                    <input type="text" name="scientific" value={scientificName} onChange={(e) => setScientificName(e.target.value)} />
-                                </div>
-                                <div>
-                                    <label>Tipo</label>
-                                    <input type="text" name="type" value={type} onChange={(e) => setType(e.target.value)} />
-                                </div>
-                                <div>
-                                    <label>Otros Nombres</label>
-                                    <button type="button" onClick={handleAddPlantName}>Agregar Nombre</button>
-                                </div>
-                                {currentPlantNames.map((plant, index) => (
-                                    <div key={index}>
-                                        <label>{`Otro Nombre ${index + 1}:`}</label>
-                                        <input type="text" value={plant} onChange={(e) => handlePlantNameChange(index, e.target.value)} />
-                                        <button type="button" onClick={() => handleRemovePlantName(index)}>Eliminar</button>
-                                    </div>
-                                ))}
+                        <div className="row col-md-10">
+                            <div className="col-md-6">
+                                {isLoading ? (
+                                    <Spinner />
+                                ) : (
+                                    <div>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                value={name}
+                                                onChange={(e) => setName(e.target.value)}
+                                                placeholder="Nombre"
+                                            />
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                name="scientific"
+                                                value={scientificName}
+                                                onChange={(e) => setScientificName(e.target.value)}
+                                                placeholder="Nombre Cientifico"
+                                            />
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                name="type"
+                                                value={type}
+                                                onChange={(e) => setType(e.target.value)}
+                                                placeholder="Tipo"
+                                            />
+                                        </div>
+                                        <div className="mt-2">
+                                            <button type="button" onClick={handleAddPlantName}>
+                                                Agregar Nombre
+                                            </button>
+                                        </div>
+                                        {currentPlantNames.map((plant, index) => (
+                                            <div key={index} className="mb-2">
+                                                <div className="d-flex align-items-center">
+                                                    <input
+                                                        type="text"
+                                                        value={plant}
+                                                        onChange={(e) => handlePlantNameChange(index, e.target.value)}
+                                                        placeholder={`Otro Nombre ${index + 1}:`}
+                                                        className="me-2"
+                                                    />
+                                                    <button type="button" onClick={() => handleRemovePlantName(index)} className="btn btn-danger">
+                                                        Eliminar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
 
+                                    </div>
+                                )}
+                            </div>
+                            <div className="col-md-6">
                                 <div>
-                                    <label>Descripcion</label>
-                                    
                                     <Editor
                                         apiKey="7djxtbl1wqcvwy12bl846kkage2t8v547hupt6z4dzxs0t7f"
                                         init={{
-                                            height: 500,
+                                            height: 400,
                                             menubar: false,
-                                            plugins: [
-                                            ],
+                                            plugins: [],
                                             toolbar:
-                                                'undo redo | formatselect | bold italic backcolor forecolor \
-                                                alignleft aligncenter alignright alignjustify | \
-                                                bullist numlist outdent indent | removeformat'
+                                                "undo redo | formatselect | bold italic backcolor forecolor \
+                                                      alignleft aligncenter alignright alignjustify | \
+                                                      bullist numlist outdent indent | removeformat"
                                         }}
-                                        onEditorChange={(value) => setDescription(value)}/>
+                                        onEditorChange={(value) => setDescription(value)}
+                                    />
                                 </div>
-                                <div>
-                                    <button type="button" onClick={handleAddPlantImage}>Agregar Imagen</button>
+                                </div>
+                            <div className="row col-md-6 mt-2 mb-2">
+                                <div className="mt-2">
+                                    <button type="button" onClick={handleAddPlantImage}>
+                                        Agregar Imagen
+                                    </button>
                                 </div>
                                 {images.map((imageData, index) => (
                                     <div key={index}>
-                                        <label>{`Subir Imagen ${index + 1}`}</label>
                                         <div>
                                             <input
                                                 type="file"
@@ -188,23 +220,25 @@ function Plantas() {
                                                 onChange={(e) => handleDescriptionChange(index, e.target.value)}
                                             />
                                         </div>
-                                        <button type="button" onClick={() => handleRemoveImage(index)}>Eliminar</button>
+                                        <button type="button" onClick={() => handleRemoveImage(index)}>
+                                            Eliminar
+                                        </button>
                                     </div>
                                 ))}
-                                <div>
-                                    <button onClick={store} className="btn btn-primary mt-3" disabled={isLoading} >Guardar</button>
-                                </div>
-
-                                <div>
-                                    {imageUrl && <img src={imageUrl} alt="Imagen" />}
-                                </div>
-                            </div>)}
+                                
+                            </div>
                         </div>
+                        <div className="row col-md-2 mt-2 mb-2">
+                                    <button onClick={store} className="btn btn-primary mt-3" disabled={isLoading}>
+                                        Guardar
+                                    </button>
+                                </div>
                     </div>
                 </div>
             </div>
         </div>
     );
+
 }
 
 export default Plantas;
