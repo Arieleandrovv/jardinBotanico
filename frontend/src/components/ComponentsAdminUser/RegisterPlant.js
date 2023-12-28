@@ -20,6 +20,12 @@ function Plantas() {
     const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState([]);
     const navigate = useNavigate();
+    const [nameError, setNameError] = useState("");
+
+  const validateName = (value) => {
+    const regex = /^[a-zA-Z ]*$/;
+    return regex.test(value);
+  };
 
     const handleAddPlantImage = () => {
         setImages([...images, { file: null, name: "", description: "" }]);
@@ -38,13 +44,13 @@ function Plantas() {
         setImages(updatedImages);
     };
 
-    const handleNameChange = (index, name) => {
+    const handleNameImageChange = (index, name) => {
         const updatedImages = [...images];
         updatedImages[index].name = name;
         setImages(updatedImages);
     };
 
-    const handleDescriptionChange = (index, description) => {
+    const handleDescriptionImageChange = (index, description) => {
         const updatedImages = [...images];
         updatedImages[index].description = description;
         setImages(updatedImages);
@@ -65,6 +71,17 @@ function Plantas() {
         updatedPlantNames.splice(index, 1);
         setCurrentPlantNames(updatedPlantNames);
     };
+
+    const handleNameChange = (e) => {
+        const value = e.target.value;
+        setName(value);
+    
+        if (!validateName(value)) {
+          setNameError("El nombre solo debe contener letras y espacios.");
+        } else {
+          setNameError("");
+        }
+      };
 
 
 
@@ -125,9 +142,11 @@ function Plantas() {
                                                 type="text"
                                                 name="name"
                                                 value={name}
-                                                onChange={(e) => setName(e.target.value)}
+                                                onChange={handleNameChange}
                                                 placeholder="Nombre"
+                                                className={nameError? "form-control is-invalid" : "form-control"}
                                             />
+                                            {nameError && <p className="text-danger">{nameError}</p>}
                                         </div>
                                         <div>
                                             <input
@@ -188,7 +207,7 @@ function Plantas() {
                                         onEditorChange={(value) => setDescription(value)}
                                     />
                                 </div>
-                                </div>
+                            </div>
                             <div className="row col-md-6 mt-2 mb-2">
                                 <div className="mt-2">
                                     <button type="button" onClick={handleAddPlantImage}>
@@ -211,13 +230,13 @@ function Plantas() {
                                                 type="text"
                                                 placeholder={`Nombre Imagen ${index + 1}`}
                                                 value={imageData.name}
-                                                onChange={(e) => handleNameChange(index, e.target.value)}
+                                                onChange={(e) => handleNameImageChange(index, e.target.value)}
                                             />
                                             <input
                                                 type="text"
                                                 placeholder={`Descripción Imagen ${index + 1}`}
                                                 value={imageData.description}
-                                                onChange={(e) => handleDescriptionChange(index, e.target.value)}
+                                                onChange={(e) => handleDescriptionImageChange(index, e.target.value)}
                                             />
                                         </div>
                                         <button type="button" onClick={() => handleRemoveImage(index)}>
@@ -225,14 +244,14 @@ function Plantas() {
                                         </button>
                                     </div>
                                 ))}
-                                
+
                             </div>
                         </div>
                         <div className="row col-md-2 mt-2 mb-2">
-                                    <button onClick={store} className="btn btn-primary mt-3" disabled={isLoading}>
-                                        Guardar
-                                    </button>
-                                </div>
+                            <button onClick={store} className="btn btn-primary mt-3" disabled={isLoading}>
+                                Guardar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
