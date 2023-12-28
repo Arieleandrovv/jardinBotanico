@@ -3,7 +3,7 @@ import "../../styles/navigation.css";
 
 const FooterExUser = () => {
     return (
-        <footer className="footer">
+        <footer className="footer mx-auto">
             <div className="container">
                 <div className="row">
                     <div className="col">

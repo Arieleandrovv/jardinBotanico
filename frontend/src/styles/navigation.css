@@ -1,14 +1,18 @@
+* {
+  box-sizing: border-box;
+}
 .footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(54, 48, 48);
+  background-color: rgb(33, 37, 41);
   color: white;
-  text-align: center;
+  text-align: center;  
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: auto;
 }
 
 .container {
@@ -20,7 +24,7 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(54, 48, 48);
+  background-color: rgb(33, 37, 41);
   color: white;
   padding: 10px;
   display: flex;

@@ -38,7 +38,7 @@ function Home() {
   };
 
   return (
-    <div>
+    <div>    
       <div className="App">
         <NavbarExUser />
         <div className="container-fluid">
