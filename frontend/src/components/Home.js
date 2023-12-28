@@ -26,10 +26,9 @@ function Home() {
           style={{ objectFit: "cover", maxWidth: 'auto', maxHeight: '180px', opacity:"80%" }} />
           <h1 class="title">JARDÍN BOTÁNICO MARTÍN CÁRDENAS</h1>
           </div>
-          <div>
-            <article>
-
-            </article>
+          <div>          
+         
+            
           </div>
           
           <div class = "layout layout--onecol">
@@ -42,8 +41,8 @@ function Home() {
                   <article class="card card--without-cta    card--what-is-in-bloom" style={{gridColumn:"3/ span 2", gridRow:"2 /span 1"}} >
                   <img src={kiskina} alt="kisquiña" style={{ height:"100%", maxmaxWidth:"100%"}}/>
                   </article>
-                  <article class="card card--without-cta card--what-is-in-bloom cta-card" style={{gridColumn:"1/ span 6", gridRow:"1 /span 1"}}>
-                  
+                  <article class="card card--without-cta card--what-is-in-bloom cta-card" style={{gridColumn:"1/ span 6", gridRow:"1 /span 0.5", alignItems:"center"}}>
+                  <h2 style={{ marginTop:"32px", fontFamily: "Baskerville"}}>..."Cada planta tiene una historia que contar, y los jardines botánicos son los narradores apasionados de ese cuento interminable de la vida vegetal."...</h2>
                   </article>
                   
                   <article class="card card--without-cta card--what-is-in-bloom cta-card" style={{}}>
@@ -52,6 +51,9 @@ function Home() {
 
                   <article class="card card--without-cta card--what-is-in-bloom cta-card" style={{}}>
                   <img src={kiswara} alt="kisquiña" style={{ height:"100%", maxWidth:"auto"}}/>
+                  </article>
+                  <article class="card card--without-cta card--what-is-in-bloom cta-card" style={{}}>
+                  <img src={sewenqa} alt="kisquiña" style={{ height:"100%", maxWidth:"auto"}}/>
                   </article>
 
                   

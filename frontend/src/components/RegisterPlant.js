@@ -48,8 +48,8 @@ function Plantas() {
                 <div className="row">
                     <Sidebar />
                     <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                        <h2 className="mt-4 mb-4 center">Registro de Plantas</h2>
-                        <div className="d-flex flex-column ">
+                        <h2 className="mt-4 mb-4 text-center" style={{backgroundColor:"#E9F6C7"}}>Registro de Plantas</h2>
+                        <div className="d-flex justify-content-center align-items-center ">
                             <form onSubmit={store} className="w-50">
                             <div className="formulario">
                                 <div>

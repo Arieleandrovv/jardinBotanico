@@ -1,4 +1,4 @@
-.login {
+/*.login {
     max-width: 550px;
     background: #F8F9FD;
     background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
@@ -11,22 +11,22 @@
     align-items: center;
     justify-content: center;
     margin-top: 50px;
-  }
-  .titulo, h2{
+  }*/
+  .titulo{
     margin: 1%;
     background-color: #E9F6C7;
     width: 100%;
     color: black;
     animation-iteration-count: initial;
     text-align: center;
+    
   }
  
   .table{
     margin: 1%;
   }
   #thead {
-    border-radius: 20px;
-    border-color: inherit aqua;
+    border-radius: 20px;;
  }
 
   .tr{
@@ -59,6 +59,8 @@
   letter-spacing: 20px;
   color: #0f1222;
   text-decoration-style: dotted;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #E9F6C7;
 }
   
 input{

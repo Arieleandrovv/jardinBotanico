@@ -1,56 +1,35 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "./NavigationComponentsAdmin/Navbar";
-import { AuthProvider, useAuth } from './AuthContext';
-//import FooterExUser from "./NavigationComponentsExUser/FooterExUser";
-//import "bootstrap/dist/css/bootstrap.css";
-import '../styles/style.css';
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { URL_BACKEND } from '../const';
+import React, { useState } from "react";
+import NavbarExUser from "./NavigationComponentsExUser/NavbarExUser";
 
-const endpoint = URL_BACKEND;
+function Login() {
+  const [correo, setCorreo] = useState("");
+  const [password, setPassword] = useState("");
 
-function Login(){
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(null);
-    const { login } = useAuth();
-    const navigate = navigate();
 
-   
-    return (
-        <div>
-          <Navbar />
-          <div className="container login">
-            <div className="heading">Iniciar Sesion: </div>
-            <form action="" className="form" >
-              <input
-                required=""
-                className="input"
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Ingrese email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                required=""
-                className="input"
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <input className="login-button" type="submit" value="Iniciar Sesion" />
-              {error && <div className="error-message">{error}</div>}
-              <label>Si olvidaste la contraseña, contacta a la empresa.</label>
-            </form>
-            <span className="agreement"></span>
+return (
+  <div>
+      <NavbarExUser />
+      <div className="container-fluid">
+          <div className="row">
+              <div className="col-md-9 ml-sm-auto col-lg-10 px-4" style={{borderBlockColor:"black"}}>
+                  <h2 className="mt-4 mb-4 text-center" style={{backgroundColor:"#E9F6C7"}}>Inicio de Sesión</h2>
+                  <div className="d-flex justify-content-center align-items-center " >
+                      <form  className="w-50 text-center ">
+                      <div className="formulario" >
+                          <div>
+                              <input type="text" name="correo" placeholder=" Ingrese su correo  " />
+                          </div>
+                          <div>
+                              <input type="password" name="contraseña" placeholder= "  Ingrese su contraseña"  />
+                          </div>
+                      </div>
+                          <button type="submit" className="btn btn-outline-success mt-3">Guardar</button>
+                      </form>
+                  </div>
+              </div>
           </div>
-        </div>
-      );
-}   
+      </div>
+  </div>
+);
+}
 export default Login;
